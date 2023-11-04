@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://deutschmn.github.io/website/about.html</loc>
-    <lastmod>2023-11-04T17:24:20.701Z</lastmod>
+    <loc>https://github.com/deutschmn/website/posts/welcome/index.html</loc>
+    <lastmod>2023-11-04T17:26:26.612Z</lastmod>
   </url>
   <url>
-    <loc>https://deutschmn.github.io/website/posts/welcome/index.html</loc>
-    <lastmod>2023-11-04T17:24:19.981Z</lastmod>
+    <loc>https://github.com/deutschmn/website/about.html</loc>
+    <lastmod>2023-11-04T17:26:25.904Z</lastmod>
   </url>
   <url>
-    <loc>https://deutschmn.github.io/website/posts/post-with-code/index.html</loc>
-    <lastmod>2023-11-04T17:24:19.673Z</lastmod>
+    <loc>https://github.com/deutschmn/website/index.html</loc>
+    <lastmod>2023-11-04T17:26:25.108Z</lastmod>
   </url>
   <url>
-    <loc>https://deutschmn.github.io/website/index.html</loc>
-    <lastmod>2023-11-04T17:24:20.391Z</lastmod>
+    <loc>https://github.com/deutschmn/website/posts/post-with-code/index.html</loc>
+    <lastmod>2023-11-04T17:26:26.268Z</lastmod>
   </url>
 </urlset>
