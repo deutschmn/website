@@ -10,9 +10,9 @@ For my [Master's thesis](more-is-more.pdf), I worked on the NLP task of fact-che
 
 The idea of my thesis is to analyse the effect of using more efficient Transformer models with sub-quadratic complexity to increase the amount of evidence they can process. Doing so increased prediction accuracy for long documents and reduced computational costs.
 
-In this blog post, I will give an overview of my research. If you want to get a complete picture, have a look at my [full thesis](more-is-more.pdf). 
+In this blog post, I will give an overview of my research. If you want to get a complete picture, have a look at my [full thesis](more-is-more.pdf).
 
-With this thesis, I have obtained my Master's degree in computer science at Graz University of Technology. I worked on the project while employed at Buster.Ai, a Paris-based startup with a focus on NLP. I would like to thank the whole team once again for their support and the computational resources I was provided with. 
+With this thesis, I have obtained my Master's degree in computer science at Graz University of Technology. I worked on the project while employed at Buster.Ai, a Paris-based startup with a focus on NLP. I would like to thank the whole team once again for their support and the computational resources I was provided with.
 
 ## What is fact-checking? Why should I care?
 
@@ -38,13 +38,13 @@ Naturally, the more evidence the model should process, the longer the input sequ
 
 Therefore, the sequence has to be cut off at some point.
 
-![](img/cutoff-2.jpg){width=80% fig-align="center"}
+![](img/cutoff-2.jpg){width="80%" fig-align="center"}
 
 ### RoBERTa predictions on FEVER
 
 Cutting off irrelevant evidence is obviously no problem, but cutting off gold evidence is. As you can see in this plot, samples for which the evidence has been cut off are significantly less likely to be correctly classified than samples for which the models have seen the gold evidence.
 
-![](img/motivation_correct_vs_gold-seen.png){width=50% fig-align="center"}
+![](img/motivation_correct_vs_gold-seen.png){width="50%" fig-align="center"}
 
 ## My Work
 
@@ -54,10 +54,10 @@ The idea of my thesis is relatively straight-forward:
 
 The research questions I was aiming to answer were the following:
 
-1. Does it improve prediction performance?
-2. Does it reduce computational costs?
-3. Which model works best?
-4. Is the approach still interpretable?
+1.  Does it improve prediction performance?
+2.  Does it reduce computational costs?
+3.  Which model works best?
+4.  Is the approach still interpretable?
 
 For doing so, I built a complete fact-checking pipeline with preprocessing, retrieval and entailment components. Let's go through them.
 
@@ -67,8 +67,8 @@ While retrieval methods weren't the focus of my work, the results of the retriev
 
 In general, there are two broad categories of retrieval methods:
 
-- **Sparse methods**: These are based on classical information retrieval techniques and work with term frequency statistics. Famous examples are [TF.IDF](https://en.wikipedia.org/wiki/Tf–idf) and [BM25](https://en.wikipedia.org/wiki/Okapi_BM25).
-- **Dense methods**: These approaches use dense neural networks (hence the name). A prominent example is [Dense Passage Retrieval (DPR)](https://arxiv.org/abs/2004.04906). The principle is relatively simple: All documents are projected into an embedding space, and the embeddings are stored in a database. At retrieval time, an embedding of the claim is computed, and the documents closest to it are returned. Common metrics for closeness are the dot-product and cosine similarity.
+-   **Sparse methods**: These are based on classical information retrieval techniques and work with term frequency statistics. Famous examples are [TF.IDF](https://en.wikipedia.org/wiki/Tf–idf) and [BM25](https://en.wikipedia.org/wiki/Okapi_BM25).
+-   **Dense methods**: These approaches use dense neural networks (hence the name). A prominent example is [Dense Passage Retrieval (DPR)](https://arxiv.org/abs/2004.04906). The principle is relatively simple: All documents are projected into an embedding space, and the embeddings are stored in a database. At retrieval time, an embedding of the claim is computed, and the documents closest to it are returned. Common metrics for closeness are the dot-product and cosine similarity.
 
 If you're interested, the creators of the wonderful library [haystack](https://github.com/deepset-ai/haystack) have written a [more in-depth comparison](https://haystack.deepset.ai/pipeline_nodes/retriever#deeper-dive-dense-vs-sparse).
 
@@ -84,7 +84,8 @@ Most fact-checking pipelines today use a two-step retrieval process:
 
 First, the relevant documents are retrieved and then the relevant passages therein. This second, so-called passage retrieval step is necessary to extract relevant passages from the documents and reduce the amount of information the entailment component needs to handle. However, as I'm using entailment models that can handle much larger input sequences, I can skip the passage retrieval component and simplify the retrieval step to this:
 
-![](img/retrieval-doc.png)
+![](img/retrieval-doc.png){fig-align="center" width="60%"}
+
 
 This removes the complexity and computational cost that the passage retrieval incurs. However, it also requires the entailment component to be better able to retrieve the relevant passages in the input sequence.
 
@@ -96,13 +97,13 @@ As a baseline, I use [RoBERTa](https://arxiv.org/abs/1907.11692), which achieves
 
 While there are a lot of Transformers with sub-quadratic complexity out there, I evaluated the following four, which cover a good mix of different techniques:
 
-**[Longformer](https://arxiv.org/abs/2004.05150)**: This model replaces the full self-attention component with a pattern approach whereby only local tokens, tokens within a dilated sliding window and global tokens can attend to each other. The Hugging Face Blog has [a nice writeup](https://huggingface.co/blog/long-range-transformers#longformer---the-long-document-transformer) if you're interested in the details. For my experiments, I activated the global attention for all claim tokens. Thereby, the claim could attend to (and be attended to by) all evidence tokens.
+[**Longformer**](https://arxiv.org/abs/2004.05150): This model replaces the full self-attention component with a pattern approach whereby only local tokens, tokens within a dilated sliding window and global tokens can attend to each other. The Hugging Face Blog has [a nice writeup](https://huggingface.co/blog/long-range-transformers#longformer---the-long-document-transformer) if you're interested in the details. For my experiments, I activated the global attention for all claim tokens. Thereby, the claim could attend to (and be attended to by) all evidence tokens.
 
-**[Big Bird](https://arxiv.org/abs/2007.14062)**: In principle, Big Bird is quite similar to Longformer. There are some important differences, such as random attention and a different global-local attention implementation, which lead to superior results in the original paper on multiple tasks. Hence, I also evaluated this model.
+[**Big Bird**](https://arxiv.org/abs/2007.14062): In principle, Big Bird is quite similar to Longformer. There are some important differences, such as random attention and a different global-local attention implementation, which lead to superior results in the original paper on multiple tasks. Hence, I also evaluated this model.
 
-**[FNet](https://arxiv.org/abs/2105.03824)**: In a very different fashion, FNet completely does away with the self-attention component and replaces it with a Fourier transform. The authors argue that this sufficiently mixes the tokens so that the feed-forward layers in the subsequent encoder blocks can learn across hidden and sequence dimension.
+[**FNet**](https://arxiv.org/abs/2105.03824): In a very different fashion, FNet completely does away with the self-attention component and replaces it with a Fourier transform. The authors argue that this sufficiently mixes the tokens so that the feed-forward layers in the subsequent encoder blocks can learn across hidden and sequence dimension.
 
-**[Perceiver IO](https://arxiv.org/abs/2107.14795)**: This Deepmind model was built to support not only text but also other modalities such as images and audio. Its core idea is to project a large input into a much smaller latent space, on which attention blocks are applied. Therefore, the model's complexity is no longer quadratic in the input length but in the latent size.
+[**Perceiver IO**](https://arxiv.org/abs/2107.14795): This Deepmind model was built to support not only text but also other modalities such as images and audio. Its core idea is to project a large input into a much smaller latent space, on which attention blocks are applied. Therefore, the model's complexity is no longer quadratic in the input length but in the latent size.
 
 This was just a very brief overview of the methods. If you want to learn more, there are plenty of resources on the web. I also provide a more detailed description [in my thesis](more-is-more.pdf).
 
@@ -146,18 +147,17 @@ I also note, however, that on FEVEROUS, performance drops with longer sequence l
 
 Overall, I find that feeding more evidence does improve entailment label accuracy. Hence, the title of this thesis is More is More. As for the answers to the research questions (simplified and condensed):
 
-1. **Does using more efficient Transformers that can handle more evidence improve prediction performance?**
-   - Yes, for longer input documents.
-   - Yes, if the evidence is only retrieved relatively far back.
-   - Only slightly in real-world retrieval results.
-2. **Does it reduce computational costs?**
-   - Only slightly when just swapping out the entailment component, i.e., replacing RoBERTa with Longformer.
-   - Yes, significantly by completely skipping the passage retrieval step, which typically makes up around **35-45% of the inference time**.
-
-3. **Which model works best?**
-   - Out of the ones I experimented with, Longformer.
-4. **Is the approach still interpretable?**
-   - Not out of the box. Due to the removal of the passage retrieval step, this pipeline cannot exhibit which passages it considered for its decision. It can only provide this information on a document level.
+1.  **Does using more efficient Transformers that can handle more evidence improve prediction performance?**
+    -   Yes, for longer input documents.
+    -   Yes, if the evidence is only retrieved relatively far back.
+    -   Only slightly in real-world retrieval results.
+2.  **Does it reduce computational costs?**
+    -   Only slightly when just swapping out the entailment component, i.e., replacing RoBERTa with Longformer.
+    -   Yes, significantly by completely skipping the passage retrieval step, which typically makes up around **35-45% of the inference time**.
+3.  **Which model works best?**
+    -   Out of the ones I experimented with, Longformer.
+4.  **Is the approach still interpretable?**
+    -   Not out of the box. Due to the removal of the passage retrieval step, this pipeline cannot exhibit which passages it considered for its decision. It can only provide this information on a document level.
 
 ## Conclusion
 
