@@ -6,9 +6,7 @@ categories: [nlp,ml,research]
 draft: false
 ---
 
-**For my [Master's thesis](more-is-more.pdf), I worked on the NLP task of fact-checking.**
-
-It started out with the observation that current, traditional Transformers (such as BERT) can only handle a limited amount of evidence. That is because they have a quadratic memory complexity in the sequence length. Therefore, processing more evidence becomes quadratically more expensive with every token added.
+For my [Master's thesis](more-is-more.pdf), I worked on the NLP task of fact-checking. It started out with the observation that current, traditional Transformers (such as BERT) can only handle a limited amount of evidence. That is because they have a quadratic memory complexity in the sequence length. Therefore, processing more evidence becomes quadratically more expensive with every token added.
 
 The idea of my thesis is to analyse the effect of using more efficient Transformer models with sub-quadratic complexity to increase the amount of evidence they can process. Doing so increased prediction accuracy for long documents and reduced computational costs.
 
@@ -40,13 +38,13 @@ Naturally, the more evidence the model should process, the longer the input sequ
 
 Therefore, the sequence has to be cut off at some point.
 
-![](img/cutoff-2.jpg)
+![](img/cutoff-2.jpg){width=80% fig-align="center"}
 
 ### RoBERTa predictions on FEVER
 
 Cutting off irrelevant evidence is obviously no problem, but cutting off gold evidence is. As you can see in this plot, samples for which the evidence has been cut off are significantly less likely to be correctly classified than samples for which the models have seen the gold evidence.
 
-![](img/motivation_correct_vs_gold-seen.png)
+![](img/motivation_correct_vs_gold-seen.png){width=50% fig-align="center"}
 
 ## My Work
 
