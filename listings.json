@@ -3,6 +3,8 @@
     "listing": "/index.html",
     "items": [
       "/blog/more-is-more/index.html",
+      "/blog/author-attribution/index.html",
+      "/blog/neural-collaborative-filtering-in-systemds/index.html",
       "/blog/security-in-container-orchestration/index.html"
     ]
   }

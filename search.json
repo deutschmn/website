@@ -7,11 +7,46 @@
     "text": "I’m Patrick, and I’m a Machine Learning Engineer at Dedalus HealthCare where I’m building models for clinical risk prediction and NLP for health."
   },
   {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "",
+    "text": "Neural Collaborative Filtering (NCF) is a fairly new approach to recommender systems proposed by He et al. It is aimed at tackling the problem of collaborative filtering, such as the Netflix problem which is about predicting users’ ratings for films they haven’t yet seen based on what they have seen before.\nWhile most work in this field in the past has employed classical matrix factorisation approaches, the idea of NCF is to replace this by one or more neural layers:\nIn a nutshell, NCF removes the restriction that the only interaction function between users and items can be an inner product in the latent feature space. It hence allows for modelling more complicated decision behaviour.\nI found this idea intriguing and implemented it in SystemDS, a machine learning system designed for large scale operations and automatic optimisation. Why? Because I could. And because it was part of a project for the course Architectures of Machine Learning Systems in my computer science master programme."
+  },
+  {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "Data set",
+    "text": "Data set\nI try this all out with the infamous MovieLens data set:\n\nThis dataset (ml-latest-small) describes 5-star rating and free-text tagging activity from MovieLens, a movie recommendation service. It contains 100836 ratings and 3683 tag applications across 9742 movies. These data were created by 610 users between March 29, 1996 and September 24, 2018. This dataset was generated on September 26, 2018.\n\n\nUsers were selected at random for inclusion. All selected users had rated at least 20 movies. No demographic information is included. Each user is represented by an id, and no other information is provided.\n\nAs in the original NCF paper, the targets are binary and only indicate whether a user has rated a movie or not. This makes the recommendation problem harder than working with the values of the ratings. It is, however, closer to a real-world use case, as interaction data is easier to collect in practice.\nMovieLens only provides positive interactions in form of ratings. I therefore randomly sample negative interactions as suggested by the original paper. They simply represent movies the user hasn’t yet interacted with."
+  },
+  {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe bottom line is that it worked quite well in my experimental setting:\n\nAs in the original paper, it outperformed some traditional matrix factorisation approaches I tried.\nHowever, the point of this project wasn’t really to optimise prediction results by optimising the hyper-parameters, but rather to implement the architecture in SystemDS to test its real-world feasibility as a machine learning system. The implementation can later be used to benchmark the system where it can show off the optimisations it does.\nWhat’s left to say? My pull request has recently been merged. 🎊 And I’ve learnt quite something about how it feels to work with a lower-level system with fewer abstractions than, for example, Keras or PyTorch."
+  },
+  {
+    "objectID": "blog/author-attribution/index.html",
+    "href": "blog/author-attribution/index.html",
+    "title": "Author Attribution: DerStandard forum writing style",
+    "section": "",
+    "text": "This is a fun project my friend Lukas and I worked on for a course on natural language processing (NLP). We used the One Million Posts Corpus which contains user comments posted to the Austrian newspaper DerStandard. The goal was to perform author attribution, so to determine the author of a forum post.\nTo do so, we mainly looked at the writing style of the post, as this was mainly an exercise in the field of NLP. We call the attributes that give away a user based on their writing style stylometric. There has been a lot of research in this field and for our analysis, we mainly looked at rather classical features such as alpha-char-ratio, punctuation, lengths, etc.\nHowever, to make it more interesting, we also looked at how these features compared to taking into account other metadata and the actual post’s content for the predictions. In the end we looked at the following:\nOur model was a deep neural network with recurrent layers (primarily GRUs) for the content embeddings and a separate dense structure for the other input features:\nObviously we did some model selection to find the ideal number of layers and the configuration of hyper-parameters."
+  },
+  {
+    "objectID": "blog/author-attribution/index.html#key-findings",
+    "href": "blog/author-attribution/index.html#key-findings",
+    "title": "Author Attribution: DerStandard forum writing style",
+    "section": "Key findings",
+    "text": "Key findings\nThe main things we found were the following:\n\nWe were best able to predict the post authors when using the stylometric features and the named entities of the articles itself. The latter allows for the assumption that people tend to comment on articles in the same genre.\nThe statistics on post dates weren’t as helpful as we had thought. Users don’t seem to have a clear enough posting routine to make accurate predictions based on the day or time they are posting.\nEven the very simple stylometric features we used already yielded quite good prediction results. In future work, it might make sense to look at this in detail and try to find out how to squeeze most out of the writing style alone.\n\nOverall, it was a very fun project with much room for further analysis. In case you want to check out all of what we did, you can find the full report on GitHub."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Hello! This is work in progress.",
     "section": "",
-    "text": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\nresearch\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2022\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nSecurity in Container Orchestration\n\n\n\n\n\n\n\nresearch\n\n\nops\n\n\nsecurity\n\n\n\n\n\n\n\n\n\n\n\nAug 30, 2019\n\n\nPatrick Deutschmann\n\n\n\n\n\n\nNo matching items"
+    "text": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\nresearch\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2022\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nAuthor Attribution: DerStandard forum writing style\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 12, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nNeural Collaborative Filtering in SystemDS\n\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 5, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nSecurity in Container Orchestration\n\n\n\n\n\n\n\nresearch\n\n\nops\n\n\nsecurity\n\n\n\n\n\n\n\n\n\n\n\nAug 30, 2019\n\n\nPatrick Deutschmann\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/security-in-container-orchestration/index.html",
