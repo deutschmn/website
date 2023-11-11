@@ -15,4 +15,6 @@ about:
       href: https://hachyderm.io/@pdeutschmn
 ---
 
-I’m Patrick, and I’m a Machine Learning Engineer at [Dedalus HealthCare](https://www.dedalus.com/global/en/) where I’m building models for clinical risk prediction and NLP for health.
+Hi, I'm Patrick!
+
+I’m a Machine Learning Engineer at [Dedalus](https://www.dedalus.com/global/en/) where I’m building models for clinical risk prediction and NLP for health.
