@@ -1,0 +1,25 @@
+---
+title: "Security in Container Orchestration"
+author: "Patrick Deutschmann"
+date: "2019-08-30"
+categories: [research,ops,security]
+draft: false
+---
+
+![](img/container-sec.png)
+
+I wrote my bachelor’s thesis on the issue of security in container orchestration, specifically in Kubernetes:
+
+> Containerisation is increasingly gaining traction to run modern applications in distributed environments. To run containers on a large scale and with high availability, container orchestration systems are commonly employed. The most widely used container orchestration system today is Kubernetes, which is highly ﬂexible, but also comes with signiﬁcant complexity.
+
+> In this thesis, we analyse the security of Kubernetes architectures. To do so, we create a layer model to give a holistic view of all relevant aspects. We demonstrate how an example application can securely run in a Kubernetes cluster and which conﬁgurations are necessary to strengthen security by employing multiple redundant barriers.
+
+> Our research shows that most Kubernetes installers already come with reasonably secure default conﬁgurations. However, custom adaptations in consideration of the deployed applications and their requirements to the runtime environment are imperative for secure cluster setup.
+
+In short, I tried to get a holistic view of the relevant security aspects of container orchestration in Kubernetes and categorised them into a layer model. 
+
+![My layer architecture for categorising Kubernetes security aspects](img/layers.png)
+
+I demonstrated my model with a sample architecture run on Google Kubernetes Engine. At the time of this writing, most Kubernetes installers already come with relatively secure default setups. However, there are still plenty of pitfalls and things to look out for in order not to [end up in a bad place](https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/).
+
+If you’re interested, you can read [my full thesis here](https://github.com/deutschmn/container-orchestration-security/blob/master/thesis.pdf).
