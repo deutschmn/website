@@ -14,7 +14,12 @@ website:
         href: https://www.linkedin.com/in/patrick-deutschmann/
 format:
   html:
-    theme: cosmo
+    # theme: cosmo
+    theme: flatly
+    # theme: sandstone
+    # theme: simplex
+    # theme: litera
+    # theme: lux
     css: styles.css
 execute:
   freeze: auto
