@@ -6,7 +6,7 @@ categories: [nlp,ml]
 draft: false
 ---
 
-![](img/million-post-corpus.png){width="40%" fig-align="center"}
+![](img/million-post-corpus.png){width="60%" fig-align="center"}
 
 This is a fun project my friend [Lukas](https://www.linkedin.com/in/lukas-timpl-408283156/) and I worked on for a course on natural language processing (NLP). We used the [One Million Posts Corpus](https://ofai.github.io/million-post-corpus/) which contains user comments posted to the Austrian newspaper [DerStandard](https://www.derstandard.at/). The goal was to perform author attribution, so to determine the author of a forum post.
 
