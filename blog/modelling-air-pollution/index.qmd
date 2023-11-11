@@ -1,0 +1,25 @@
+---
+title: "Modelling Air Pollution Transfers for Prediction, Analysis and Simulation"
+author: "Patrick Deutschmann"
+date: "2022-01-30"
+categories: [ml]
+draft: false
+---
+
+![Illustration of PM2.5 transfers from [Wang et al. (2020)](https://dl.acm.org/doi/10.1145/3397536.3422208)](img/air.png){width="80%"}
+
+Last spring, I worked on an exciting project in the course of my master's studies. I designed a graph-based neural network that predicts air pollution and builds on the basic observation that the concentration of pollutants is often affected by transfer events. Unfortunately, I'm just getting to blog about it now, but I felt like it was too interesting not to publish it. I was supervised by [Olga Saukh](http://www.olgasaukh.com/) from TU Graz and [Yun Cheng](https://ee.ethz.ch/the-department/people-a-z/person-detail.MjQyMDUw.TGlzdC8zMjc5LC0xNjUwNTg5ODIw.html) from ETH Zürich.
+
+Air pollution appears in various shapes and forms and is affected by a multitude of factors. In one of the simplest cases, the wind carries pollutants from where they were emitted to different locations. Our approach uses current concentration levels, geographical properties, wind and weather features to predict future pollution.
+
+![Model predictions over time](img/preds.png)
+
+In order to do so, we extend existing work by replacing a core component with an interpretable pollution transfer matrix. This can then be used to analyse the influence of specific locations on different ones: Thereby, the predictions are interpretable, and the model can provide information about where it predicts transfers to take place.
+
+![Influence of surrounding cities on Qianmen](img/R_in_qianmen.png)
+
+![Transfer matrix](img/R-matrix-3.png){width="70%"}
+
+Our method achieves performances comparable to the state-of-the-art for short-term predictions while also explaining its results. Moreover, it can simulate how reducing emissions at one location would impact air pollution in the area.
+
+If you’re interested in the details, you can check out [my report](modelling-air-pollution.pdf).
