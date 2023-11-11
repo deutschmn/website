@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Patrick Deutschmann">
+<meta name="dcterms.date" content="2022-06-13">
+
+<title>Patrick Deutschmann - More is More: An Analysis of Using Efficient Transformers for Fact-Checking</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Patrick Deutschmann</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume.pdf" rel="" target="">
+ <span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/deutschmn" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://hachyderm.io/@pdeutschmn" rel="" target=""><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/patrick-deutschmann/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">More is More: An Analysis of Using Efficient Transformers for Fact-Checking</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">nlp</div>
+                <div class="quarto-category">ml</div>
+                <div class="quarto-category">research</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Patrick Deutschmann </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 13, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><strong>For my <a href="more-is-more.pdf">Master’s thesis</a>, I worked on the NLP task of fact-checking.</strong></p>
+<p>It started out with the observation that current, traditional Transformers (such as BERT) can only handle a limited amount of evidence. That is because they have a quadratic memory complexity in the sequence length. Therefore, processing more evidence becomes quadratically more expensive with every token added.</p>
+<p>The idea of my thesis is to analyse the effect of using more efficient Transformer models with sub-quadratic complexity to increase the amount of evidence they can process. Doing so increased prediction accuracy for long documents and reduced computational costs.</p>
+<p>In this blog post, I will give an overview of my research. If you want to get a complete picture, have a look at my <a href="more-is-more.pdf">full thesis</a>.</p>
+<p>With this thesis, I have obtained my Master’s degree in computer science at Graz University of Technology. I worked on the project while employed at Buster.Ai, a Paris-based startup with a focus on NLP. I would like to thank the whole team once again for their support and the computational resources I was provided with.</p>
+<section id="what-is-fact-checking-why-should-i-care" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-fact-checking-why-should-i-care">What is fact-checking? Why should I care?</h2>
+<p>False information on and off the web is becoming increasingly common. Economic fallout, societal conflicts and health risks follow. Automatic fact-checking systems are one way to combat this ever more dangerous problem. In principle, they work like this: A claim that is to be verified is input into the system. It, then, predicts a verdict. This verdict is not (and cannot be) whether the claim is true or false since this would require the model to make definitive statements about the world. As this is infeasible, such systems resort to predicting whether a claim is supported or refuted by their evidence base (a.k.a. knowledge base). For example, for the famous fact-checking data sets <a href="https://fever.ai/">FEVER and FEVEROUS</a>, this evidence base is Wikipedia. Here is an example of such a claim from the FEVEROUS data set:</p>
+<p><img src="img/introduction-example.png" class="img-fluid"></p>
+<p>The evidence base (<em>Wikipedia</em>) is used to predict the verdict of the claim (<em>Refuted</em>).</p>
+</section>
+<section id="how-do-fact-checking-systems-work" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-fact-checking-systems-work">How do fact-checking systems work?</h2>
+<p>Fact-checking systems with explicit knowledge bases work as follows:</p>
+<p><img src="img/high-level-fact-checking-pipeline.png" class="img-fluid"></p>
+<p>A <strong>retrieval</strong> component extracts the relevant evidence (also called <em>gold evidence</em>) from the evidence base. In the previous example, this would be the Wikipedia article of <em>Micheal McCafferty</em>. Then, an <strong>entailment</strong> model predicts a verdict, i.e., whether the retrieved evidence supports or refutes the claim. The entailment task is also known as <a href="https://paperswithcode.com/task/natural-language-inference">Natural Language Inference (NLI)</a>. Most state-of-the-art entailment models today are Transformers, which process one joint input sequence per sample. In the case of fact-checking, this means that the claim and the relevant evidence are concatenated into one long sequence of length <span class="math inline">\(N\)</span>.</p>
+<p><img src="img/preprocessing_evidence-merging.png" class="img-fluid"></p>
+<p>Naturally, the more evidence the model should process, the longer the input sequence becomes. However, as Transformers have quadratic complexity in the input length, adding more evidence becomes quadratically more expensive.</p>
+<p><img src="img/transformer-complexity.png" class="img-fluid"></p>
+<p>Therefore, the sequence has to be cut off at some point.</p>
+<p><img src="img/cutoff-2.jpg" class="img-fluid"></p>
+<section id="roberta-predictions-on-fever" class="level3">
+<h3 class="anchored" data-anchor-id="roberta-predictions-on-fever">RoBERTa predictions on FEVER</h3>
+<p>Cutting off irrelevant evidence is obviously no problem, but cutting off gold evidence is. As you can see in this plot, samples for which the evidence has been cut off are significantly less likely to be correctly classified than samples for which the models have seen the gold evidence.</p>
+<p><img src="img/motivation_correct_vs_gold-seen.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="my-work" class="level2">
+<h2 class="anchored" data-anchor-id="my-work">My Work</h2>
+<p>The idea of my thesis is relatively straight-forward:</p>
+<p><strong><em>Use more efficient Transformers with sub-quadratic complexity that can handle more evidence.</em></strong></p>
+<p>The research questions I was aiming to answer were the following:</p>
+<ol type="1">
+<li>Does it improve prediction performance?</li>
+<li>Does it reduce computational costs?</li>
+<li>Which model works best?</li>
+<li>Is the approach still interpretable?</li>
+</ol>
+<p>For doing so, I built a complete fact-checking pipeline with preprocessing, retrieval and entailment components. Let’s go through them.</p>
+<section id="retrieval" class="level3">
+<h3 class="anchored" data-anchor-id="retrieval">Retrieval</h3>
+<p>While retrieval methods weren’t the focus of my work, the results of the retrieval step form the foundation of the pipeline. I, therefore, ran some experiments to find the ones who were best suited for my task.</p>
+<p>In general, there are two broad categories of retrieval methods:</p>
+<ul>
+<li><strong>Sparse methods</strong>: These are based on classical information retrieval techniques and work with term frequency statistics. Famous examples are <a href="https://en.wikipedia.org/wiki/Tf–idf">TF.IDF</a> and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a>.</li>
+<li><strong>Dense methods</strong>: These approaches use dense neural networks (hence the name). A prominent example is <a href="https://arxiv.org/abs/2004.04906">Dense Passage Retrieval (DPR)</a>. The principle is relatively simple: All documents are projected into an embedding space, and the embeddings are stored in a database. At retrieval time, an embedding of the claim is computed, and the documents closest to it are returned. Common metrics for closeness are the dot-product and cosine similarity.</li>
+</ul>
+<p>If you’re interested, the creators of the wonderful library <a href="https://github.com/deepset-ai/haystack">haystack</a> have written a <a href="https://haystack.deepset.ai/pipeline_nodes/retriever#deeper-dive-dense-vs-sparse">more in-depth comparison</a>.</p>
+<p>For my purposes, I decided to focus on sparse retrieval with BM25 since it yielded sufficient results without further fine-tuning. It was a good baseline to compare entailment methods.</p>
+<p>However, this is not to say that I believe sparse methods are sufficient for all fact-checking applications. Their inability to handle synonyms is just the most glaring shortcoming of exact term matching. DPR isn’t the ideal solution either. For example, claims that require multi-hop reasoning (as nicely explained by <a href="https://ar5iv.labs.arxiv.org/html/2009.06401#S1.F1">Ostrowski, Wojciech et al.</a>) require specialised methods, such as <a href="https://arxiv.org/abs/2009.12756">Multi-Hop Dense Retrieval (MDR)</a>. Due to cascading errors, the shortcomings of retrieval methods cannot entirely be mitigated by using more powerful entailment models. If the relevant evidence hasn’t at all been retrieved, the entailment model won’t be able to make up for that.</p>
+<section id="no-passage-retrieval" class="level4">
+<h4 class="anchored" data-anchor-id="no-passage-retrieval">No Passage Retrieval</h4>
+<p>Most fact-checking pipelines today use a two-step retrieval process:</p>
+<p><img src="img/retrieval-doc-pass.png" class="img-fluid"></p>
+<p>First, the relevant documents are retrieved and then the relevant passages therein. This second, so-called passage retrieval step is necessary to extract relevant passages from the documents and reduce the amount of information the entailment component needs to handle. However, as I’m using entailment models that can handle much larger input sequences, I can skip the passage retrieval component and simplify the retrieval step to this:</p>
+<p><img src="img/retrieval-doc.png" class="img-fluid"></p>
+<p>This removes the complexity and computational cost that the passage retrieval incurs. However, it also requires the entailment component to be better able to retrieve the relevant passages in the input sequence.</p>
+</section>
+</section>
+</section>
+<section id="entailment" class="level2">
+<h2 class="anchored" data-anchor-id="entailment">Entailment</h2>
+<p>The core part of this work concerns the entailment component. The ones in my experiments can handle more evidence by replacing classical Transformer models with more efficient variants.</p>
+<p>As a baseline, I use <a href="https://arxiv.org/abs/1907.11692">RoBERTa</a>, which achieves quite <a href="https://paperswithcode.com/task/natural-language-inference/latest">good results for NLI</a> at a moderate number of parameters. However, as it is a traditional quadratic Transformer, it can reasonably only handle up to 512 tokens in most current hardware settings.</p>
+<p>While there are a lot of Transformers with sub-quadratic complexity out there, I evaluated the following four, which cover a good mix of different techniques:</p>
+<p><strong><a href="https://arxiv.org/abs/2004.05150">Longformer</a></strong>: This model replaces the full self-attention component with a pattern approach whereby only local tokens, tokens within a dilated sliding window and global tokens can attend to each other. The Hugging Face Blog has <a href="https://huggingface.co/blog/long-range-transformers#longformer---the-long-document-transformer">a nice writeup</a> if you’re interested in the details. For my experiments, I activated the global attention for all claim tokens. Thereby, the claim could attend to (and be attended to by) all evidence tokens.</p>
+<p><strong><a href="https://arxiv.org/abs/2007.14062">Big Bird</a></strong>: In principle, Big Bird is quite similar to Longformer. There are some important differences, such as random attention and a different global-local attention implementation, which lead to superior results in the original paper on multiple tasks. Hence, I also evaluated this model.</p>
+<p><strong><a href="https://arxiv.org/abs/2105.03824">FNet</a></strong>: In a very different fashion, FNet completely does away with the self-attention component and replaces it with a Fourier transform. The authors argue that this sufficiently mixes the tokens so that the feed-forward layers in the subsequent encoder blocks can learn across hidden and sequence dimension.</p>
+<p><strong><a href="https://arxiv.org/abs/2107.14795">Perceiver IO</a></strong>: This Deepmind model was built to support not only text but also other modalities such as images and audio. Its core idea is to project a large input into a much smaller latent space, on which attention blocks are applied. Therefore, the model’s complexity is no longer quadratic in the input length but in the latent size.</p>
+<p>This was just a very brief overview of the methods. If you want to learn more, there are plenty of resources on the web. I also provide a more detailed description <a href="more-is-more.pdf">in my thesis</a>.</p>
+<section id="extending-position-embeddings" class="level3">
+<h3 class="anchored" data-anchor-id="extending-position-embeddings">Extending Position Embeddings</h3>
+<p>Longformer and Big Bird were specifically designed to handle longer input sequences. It is probably therefore that pre-trained checkpoints for 4096 tokens were available (<a href="https://huggingface.co/allenai/longformer-base-4096"><code>allenai/longformer-base-4096</code></a>, <a href="https://huggingface.co/google/bigbird-roberta-base"><code>google/bigbird-roberta-base</code></a>).</p>
+<p>However, for FNet and Perceiver IO, there are no weights available for configurations that can handle as much evidence as the other two. Since I lacked the computational resources to train them from scratch, I experimented with four ways of extending position embeddings: random initialisation, repetition, linear interpolation and nearest-neighbour interpolation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/extending-embeddings.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Illustration of extending position embeddings: Rows are the hidden dimension (<span class="math inline">\(D=3\)</span>), and columns are the sequence dimension which is being extended from <span class="math inline">\(N=3\)</span> to <span class="math inline">\(N'=5\)</span>.</figcaption>
+</figure>
+</div>
+<p>I found repetition to train fastest for FNet and nearest-neighbour interpolation for Perceiver IO. However, these are imperfect solutions, and it would likely have improved results to directly pre-train models for longer inputs with masked language modelling (MLM). From a personal learning perspective, it was still interesting to develop solutions to make this work in a resource-constrained setting.</p>
+</section>
+</section>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
+<p>Finally, we get to the evaluation results. The data sets I used for comparing models and benchmarking overall performance were FEVER, FEVEROUS and FaVIQ. All three have Wikipedia as their evidence bases, but FEVER only contains the introductory paragraphs, while the others contain the full articles.</p>
+<p>To better analyse how useful efficient Transformers are, I computed where in the input sequence the gold evidence was located for different data sets. After all, using a longer input sequence doesn’t make sense if the gold evidence is found in the beginning already.</p>
+<p><img src="img/gold-evidence-location.png" class="img-fluid"></p>
+<p>All of these results are based on BM25 retrieval. For FEVER, a lot of gold evidence is before the cutoff line for RoBERTa (512 tokens), while for FEVEROUS, a lot more evidence is after that. To detach the entailment experiments from the retrieval method used, I also generated two synthetic retrieval inputs: In Gold far back, most gold evidence is after what RoBERTa can see, and in Uniform gold, it is uniformly distributed across the 4096 tokens.</p>
+<p>Unsurprisingly, in the gold far back setting, models that can look beyond token 512 have a big advantage and perform considerably better than RoBERTa:</p>
+<p><img src="img/results-gold-far-back.png" class="img-fluid"></p>
+<p>In the <em>uniform gold</em> setting, which I used to compare all models, I found Longformer to perform best:</p>
+<p><img src="img/results-synthetic-2.png" class="img-fluid"></p>
+<p>Its performance increases when it sees more evidence and clearly beats the RoBERTa baseline. Big Bird develops similarly but consistently worse than Longformer. While Perceiver IO starts relatively promising, I found it to be hard to fine-tune to longer sequences. I suspect that this is because the encoder is hard to adjust to different position embeddings. FNet is outperformed by all other models, which is, however, not too surprising, given that it is also far behind RoBERTa on the <a href="https://paperswithcode.com/sota/natural-language-inference-on-multinli">GLUE NLI task</a>.</p>
+<p>Finally, I evaluated the best-performing model, Longformer, on FEVER, FaVIQ and FEVEROUS and found that using longer sequences does improve performance:</p>
+<p><img src="img/results-real-ds.png" class="img-fluid"></p>
+<p>I also note, however, that on FEVEROUS, performance drops with longer sequence lengths, suggesting that the models are susceptible to noise, i.e., irrelevant evidence. My ablation study on this matter confirmed this hypothesis by showing that RoBERTa’s performance dropped from 95% accuracy when seeing only gold evidence to 86% when irrelevant evidence is appended.</p>
+</section>
+<section id="key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<p>Overall, I find that feeding more evidence does improve entailment label accuracy. Hence, the title of this thesis is More is More. As for the answers to the research questions (simplified and condensed):</p>
+<ol type="1">
+<li><strong>Does using more efficient Transformers that can handle more evidence improve prediction performance?</strong>
+<ul>
+<li>Yes, for longer input documents.</li>
+<li>Yes, if the evidence is only retrieved relatively far back.</li>
+<li>Only slightly in real-world retrieval results.</li>
+</ul></li>
+<li><strong>Does it reduce computational costs?</strong>
+<ul>
+<li>Only slightly when just swapping out the entailment component, i.e., replacing RoBERTa with Longformer.</li>
+<li>Yes, significantly by completely skipping the passage retrieval step, which typically makes up around <strong>35-45% of the inference time</strong>.</li>
+</ul></li>
+<li><strong>Which model works best?</strong>
+<ul>
+<li>Out of the ones I experimented with, Longformer.</li>
+</ul></li>
+<li><strong>Is the approach still interpretable?</strong>
+<ul>
+<li>Not out of the box. Due to the removal of the passage retrieval step, this pipeline cannot exhibit which passages it considered for its decision. It can only provide this information on a document level.</li>
+</ul></li>
+</ol>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Using efficient Transformers allowed me to reach 97-99% of the state-of-the-art performance on the FEVER data set at only 40-60% of the inference time. This is made possible by efficient BM25 document retrieval, but primarily because using efficient Transformers allows for completely skipping the passage retrieval step.</p>
+<p>While these models obtain impressive results on the data sets they were trained on, plenty of challenges still lie ahead of us. To name a few: Models should become better at handling irrelevant evidence; they should know what they don’t know and be able to explain how they came up with their verdicts.</p>
+<p>In any case, I enjoyed working on this challenging task and am eager to see how the field develops in the future. I believe that the use of more efficient Transformer models has the potential for unlocking new levels of fact-checking performance with respect to both predictive and computational performance.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

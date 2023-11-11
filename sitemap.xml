@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/deutschmn/website/about.html</loc>
-    <lastmod>2023-11-11T13:27:31.105Z</lastmod>
+    <loc>https://github.com/deutschmn/website/index.html</loc>
+    <lastmod>2023-11-11T14:12:30.435Z</lastmod>
   </url>
   <url>
-    <loc>https://github.com/deutschmn/website/index.html</loc>
-    <lastmod>2023-11-11T13:27:30.581Z</lastmod>
+    <loc>https://github.com/deutschmn/website/about.html</loc>
+    <lastmod>2023-11-11T14:12:31.171Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/posts/n-more-is-more/index.html</loc>
+    <lastmod>2023-11-11T14:12:32.363Z</lastmod>
   </url>
 </urlset>
