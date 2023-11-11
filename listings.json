@@ -2,7 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/n-more-is-more/index.html"
+      "/blog/more-is-more/index.html",
+      "/blog/security-in-container-orchestration/index.html"
     ]
   }
 ]

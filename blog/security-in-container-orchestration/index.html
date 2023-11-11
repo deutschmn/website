@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
-<meta name="dcterms.date" content="2023-11-04">
+<meta name="author" content="Patrick Deutschmann">
+<meta name="dcterms.date" content="2019-08-30">
 
-<title>Patrick Deutschmann - Post With Code</title>
+<title>Patrick Deutschmann - Security in Container Orchestration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,11 +117,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Post With Code</h1>
+      <h1 class="title">Security in Container Orchestration</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">research</div>
+                <div class="quarto-category">ops</div>
+                <div class="quarto-category">security</div>
               </div>
                   </div>
   </div>
@@ -132,14 +132,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Harlow Malloc </p>
+               <p>Patrick Deutschmann </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 4, 2023</p>
+        <p class="date">August 30, 2019</p>
       </div>
     </div>
     
@@ -157,7 +157,26 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is a post with executable code.</p>
+<p><img src="img/container-sec.png" class="img-fluid"></p>
+<p>I wrote my bachelor’s thesis on the issue of security in container orchestration, specifically in Kubernetes:</p>
+<blockquote class="blockquote">
+<p>Containerisation is increasingly gaining traction to run modern applications in distributed environments. To run containers on a large scale and with high availability, container orchestration systems are commonly employed. The most widely used container orchestration system today is Kubernetes, which is highly ﬂexible, but also comes with signiﬁcant complexity.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>In this thesis, we analyse the security of Kubernetes architectures. To do so, we create a layer model to give a holistic view of all relevant aspects. We demonstrate how an example application can securely run in a Kubernetes cluster and which conﬁgurations are necessary to strengthen security by employing multiple redundant barriers.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Our research shows that most Kubernetes installers already come with reasonably secure default conﬁgurations. However, custom adaptations in consideration of the deployed applications and their requirements to the runtime environment are imperative for secure cluster setup.</p>
+</blockquote>
+<p>In short, I tried to get a holistic view of the relevant security aspects of container orchestration in Kubernetes and categorised them into a layer model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/layers.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">My layer architecture for categorising Kubernetes security aspects</figcaption>
+</figure>
+</div>
+<p>I demonstrated my model with a sample architecture run on Google Kubernetes Engine. At the time of this writing, most Kubernetes installers already come with relatively secure default setups. However, there are still plenty of pitfalls and things to look out for in order not to <a href="https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/">end up in a bad place</a>.</p>
+<p>If you’re interested, you can read <a href="https://github.com/deutschmn/container-orchestration-security/blob/master/thesis.pdf">my full thesis here</a>.</p>
 
 
 
