@@ -7,55 +7,6 @@
     "text": "I’m Patrick, and I’m a Machine Learning Engineer at Dedalus HealthCare where I’m building models for clinical risk prediction and NLP for health."
   },
   {
-    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html",
-    "href": "blog/neural-collaborative-filtering-in-systemds/index.html",
-    "title": "Neural Collaborative Filtering in SystemDS",
-    "section": "",
-    "text": "Neural Collaborative Filtering (NCF) is a fairly new approach to recommender systems proposed by He et al. It is aimed at tackling the problem of collaborative filtering, such as the Netflix problem which is about predicting users’ ratings for films they haven’t yet seen based on what they have seen before.\nWhile most work in this field in the past has employed classical matrix factorisation approaches, the idea of NCF is to replace this by one or more neural layers:\nIn a nutshell, NCF removes the restriction that the only interaction function between users and items can be an inner product in the latent feature space. It hence allows for modelling more complicated decision behaviour.\nI found this idea intriguing and implemented it in SystemDS, a machine learning system designed for large scale operations and automatic optimisation. Why? Because I could. And because it was part of a project for the course Architectures of Machine Learning Systems in my computer science master programme."
-  },
-  {
-    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
-    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
-    "title": "Neural Collaborative Filtering in SystemDS",
-    "section": "Data set",
-    "text": "Data set\nI try this all out with the infamous MovieLens data set:\n\nThis dataset (ml-latest-small) describes 5-star rating and free-text tagging activity from MovieLens, a movie recommendation service. It contains 100836 ratings and 3683 tag applications across 9742 movies. These data were created by 610 users between March 29, 1996 and September 24, 2018. This dataset was generated on September 26, 2018.\n\n\nUsers were selected at random for inclusion. All selected users had rated at least 20 movies. No demographic information is included. Each user is represented by an id, and no other information is provided.\n\nAs in the original NCF paper, the targets are binary and only indicate whether a user has rated a movie or not. This makes the recommendation problem harder than working with the values of the ratings. It is, however, closer to a real-world use case, as interaction data is easier to collect in practice.\nMovieLens only provides positive interactions in form of ratings. I therefore randomly sample negative interactions as suggested by the original paper. They simply represent movies the user hasn’t yet interacted with."
-  },
-  {
-    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
-    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
-    "title": "Neural Collaborative Filtering in SystemDS",
-    "section": "Conclusion",
-    "text": "Conclusion\nThe bottom line is that it worked quite well in my experimental setting:\n\nAs in the original paper, it outperformed some traditional matrix factorisation approaches I tried.\nHowever, the point of this project wasn’t really to optimise prediction results by optimising the hyper-parameters, but rather to implement the architecture in SystemDS to test its real-world feasibility as a machine learning system. The implementation can later be used to benchmark the system where it can show off the optimisations it does.\nWhat’s left to say? My pull request has recently been merged. 🎊 And I’ve learnt quite something about how it feels to work with a lower-level system with fewer abstractions than, for example, Keras or PyTorch."
-  },
-  {
-    "objectID": "blog/author-attribution/index.html",
-    "href": "blog/author-attribution/index.html",
-    "title": "Author Attribution: DerStandard forum writing style",
-    "section": "",
-    "text": "This is a fun project my friend Lukas and I worked on for a course on natural language processing (NLP). We used the One Million Posts Corpus which contains user comments posted to the Austrian newspaper DerStandard. The goal was to perform author attribution, so to determine the author of a forum post.\nTo do so, we mainly looked at the writing style of the post, as this was mainly an exercise in the field of NLP. We call the attributes that give away a user based on their writing style stylometric. There has been a lot of research in this field and for our analysis, we mainly looked at rather classical features such as alpha-char-ratio, punctuation, lengths, etc.\nHowever, to make it more interesting, we also looked at how these features compared to taking into account other metadata and the actual post’s content for the predictions. In the end we looked at the following:\nOur model was a deep neural network with recurrent layers (primarily GRUs) for the content embeddings and a separate dense structure for the other input features:\nObviously we did some model selection to find the ideal number of layers and the configuration of hyper-parameters."
-  },
-  {
-    "objectID": "blog/author-attribution/index.html#key-findings",
-    "href": "blog/author-attribution/index.html#key-findings",
-    "title": "Author Attribution: DerStandard forum writing style",
-    "section": "Key findings",
-    "text": "Key findings\nThe main things we found were the following:\n\nWe were best able to predict the post authors when using the stylometric features and the named entities of the articles itself. The latter allows for the assumption that people tend to comment on articles in the same genre.\nThe statistics on post dates weren’t as helpful as we had thought. Users don’t seem to have a clear enough posting routine to make accurate predictions based on the day or time they are posting.\nEven the very simple stylometric features we used already yielded quite good prediction results. In future work, it might make sense to look at this in detail and try to find out how to squeeze most out of the writing style alone.\n\nOverall, it was a very fun project with much room for further analysis. In case you want to check out all of what we did, you can find the full report on GitHub."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hello! This is work in progress.",
-    "section": "",
-    "text": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\nresearch\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2022\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nAuthor Attribution: DerStandard forum writing style\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 12, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nNeural Collaborative Filtering in SystemDS\n\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 5, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nSecurity in Container Orchestration\n\n\n\n\n\n\n\nresearch\n\n\nops\n\n\nsecurity\n\n\n\n\n\n\n\n\n\n\n\nAug 30, 2019\n\n\nPatrick Deutschmann\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "blog/security-in-container-orchestration/index.html",
-    "href": "blog/security-in-container-orchestration/index.html",
-    "title": "Security in Container Orchestration",
-    "section": "",
-    "text": "I wrote my bachelor’s thesis on the issue of security in container orchestration, specifically in Kubernetes:\n\nContainerisation is increasingly gaining traction to run modern applications in distributed environments. To run containers on a large scale and with high availability, container orchestration systems are commonly employed. The most widely used container orchestration system today is Kubernetes, which is highly ﬂexible, but also comes with signiﬁcant complexity.\n\n\nIn this thesis, we analyse the security of Kubernetes architectures. To do so, we create a layer model to give a holistic view of all relevant aspects. We demonstrate how an example application can securely run in a Kubernetes cluster and which conﬁgurations are necessary to strengthen security by employing multiple redundant barriers.\n\n\nOur research shows that most Kubernetes installers already come with reasonably secure default conﬁgurations. However, custom adaptations in consideration of the deployed applications and their requirements to the runtime environment are imperative for secure cluster setup.\n\nIn short, I tried to get a holistic view of the relevant security aspects of container orchestration in Kubernetes and categorised them into a layer model.\n\n\n\nMy layer architecture for categorising Kubernetes security aspects\n\n\nI demonstrated my model with a sample architecture run on Google Kubernetes Engine. At the time of this writing, most Kubernetes installers already come with relatively secure default setups. However, there are still plenty of pitfalls and things to look out for in order not to end up in a bad place.\nIf you’re interested, you can read my full thesis here."
-  },
-  {
     "objectID": "blog/more-is-more/index.html",
     "href": "blog/more-is-more/index.html",
     "title": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking",
@@ -110,5 +61,89 @@
     "title": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking",
     "section": "Conclusion",
     "text": "Conclusion\nUsing efficient Transformers allowed me to reach 97-99% of the state-of-the-art performance on the FEVER data set at only 40-60% of the inference time. This is made possible by efficient BM25 document retrieval, but primarily because using efficient Transformers allows for completely skipping the passage retrieval step.\nWhile these models obtain impressive results on the data sets they were trained on, plenty of challenges still lie ahead of us. To name a few: Models should become better at handling irrelevant evidence; they should know what they don’t know and be able to explain how they came up with their verdicts.\nIn any case, I enjoyed working on this challenging task and am eager to see how the field develops in the future. I believe that the use of more efficient Transformer models has the potential for unlocking new levels of fact-checking performance with respect to both predictive and computational performance."
+  },
+  {
+    "objectID": "blog/security-in-container-orchestration/index.html",
+    "href": "blog/security-in-container-orchestration/index.html",
+    "title": "Security in Container Orchestration",
+    "section": "",
+    "text": "I wrote my bachelor’s thesis on the issue of security in container orchestration, specifically in Kubernetes:\n\nContainerisation is increasingly gaining traction to run modern applications in distributed environments. To run containers on a large scale and with high availability, container orchestration systems are commonly employed. The most widely used container orchestration system today is Kubernetes, which is highly ﬂexible, but also comes with signiﬁcant complexity.\n\n\nIn this thesis, we analyse the security of Kubernetes architectures. To do so, we create a layer model to give a holistic view of all relevant aspects. We demonstrate how an example application can securely run in a Kubernetes cluster and which conﬁgurations are necessary to strengthen security by employing multiple redundant barriers.\n\n\nOur research shows that most Kubernetes installers already come with reasonably secure default conﬁgurations. However, custom adaptations in consideration of the deployed applications and their requirements to the runtime environment are imperative for secure cluster setup.\n\nIn short, I tried to get a holistic view of the relevant security aspects of container orchestration in Kubernetes and categorised them into a layer model.\n\n\n\nMy layer architecture for categorising Kubernetes security aspects\n\n\nI demonstrated my model with a sample architecture run on Google Kubernetes Engine. At the time of this writing, most Kubernetes installers already come with relatively secure default setups. However, there are still plenty of pitfalls and things to look out for in order not to end up in a bad place.\nIf you’re interested, you can read my full thesis here."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hello! This is work in progress.",
+    "section": "",
+    "text": "More is More: An Analysis of Using Efficient Transformers for Fact-Checking\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\nresearch\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2022\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nWhose Food?\n\n\n\n\n\n\n\nfun\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nDec 12, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nAuthor Attribution: DerStandard forum writing style\n\n\n\n\n\n\n\nnlp\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 12, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nNeural Collaborative Filtering in SystemDS\n\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n\n\nJul 5, 2020\n\n\nPatrick Deutschmann\n\n\n\n\n\n\n  \n\n\n\n\nSecurity in Container Orchestration\n\n\n\n\n\n\n\nresearch\n\n\nops\n\n\nsecurity\n\n\n\n\n\n\n\n\n\n\n\nAug 30, 2019\n\n\nPatrick Deutschmann\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/author-attribution/index.html",
+    "href": "blog/author-attribution/index.html",
+    "title": "Author Attribution: DerStandard forum writing style",
+    "section": "",
+    "text": "This is a fun project my friend Lukas and I worked on for a course on natural language processing (NLP). We used the One Million Posts Corpus which contains user comments posted to the Austrian newspaper DerStandard. The goal was to perform author attribution, so to determine the author of a forum post.\nTo do so, we mainly looked at the writing style of the post, as this was mainly an exercise in the field of NLP. We call the attributes that give away a user based on their writing style stylometric. There has been a lot of research in this field and for our analysis, we mainly looked at rather classical features such as alpha-char-ratio, punctuation, lengths, etc.\nHowever, to make it more interesting, we also looked at how these features compared to taking into account other metadata and the actual post’s content for the predictions. In the end we looked at the following:\nOur model was a deep neural network with recurrent layers (primarily GRUs) for the content embeddings and a separate dense structure for the other input features:\nObviously we did some model selection to find the ideal number of layers and the configuration of hyper-parameters."
+  },
+  {
+    "objectID": "blog/author-attribution/index.html#key-findings",
+    "href": "blog/author-attribution/index.html#key-findings",
+    "title": "Author Attribution: DerStandard forum writing style",
+    "section": "Key findings",
+    "text": "Key findings\nThe main things we found were the following:\n\nWe were best able to predict the post authors when using the stylometric features and the named entities of the articles itself. The latter allows for the assumption that people tend to comment on articles in the same genre.\nThe statistics on post dates weren’t as helpful as we had thought. Users don’t seem to have a clear enough posting routine to make accurate predictions based on the day or time they are posting.\nEven the very simple stylometric features we used already yielded quite good prediction results. In future work, it might make sense to look at this in detail and try to find out how to squeeze most out of the writing style alone.\n\nOverall, it was a very fun project with much room for further analysis. In case you want to check out all of what we did, you can find the full report on GitHub."
+  },
+  {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "",
+    "text": "Neural Collaborative Filtering (NCF) is a fairly new approach to recommender systems proposed by He et al. It is aimed at tackling the problem of collaborative filtering, such as the Netflix problem which is about predicting users’ ratings for films they haven’t yet seen based on what they have seen before.\nWhile most work in this field in the past has employed classical matrix factorisation approaches, the idea of NCF is to replace this by one or more neural layers:\nIn a nutshell, NCF removes the restriction that the only interaction function between users and items can be an inner product in the latent feature space. It hence allows for modelling more complicated decision behaviour.\nI found this idea intriguing and implemented it in SystemDS, a machine learning system designed for large scale operations and automatic optimisation. Why? Because I could. And because it was part of a project for the course Architectures of Machine Learning Systems in my computer science master programme."
+  },
+  {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#data-set",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "Data set",
+    "text": "Data set\nI try this all out with the infamous MovieLens data set:\n\nThis dataset (ml-latest-small) describes 5-star rating and free-text tagging activity from MovieLens, a movie recommendation service. It contains 100836 ratings and 3683 tag applications across 9742 movies. These data were created by 610 users between March 29, 1996 and September 24, 2018. This dataset was generated on September 26, 2018.\n\n\nUsers were selected at random for inclusion. All selected users had rated at least 20 movies. No demographic information is included. Each user is represented by an id, and no other information is provided.\n\nAs in the original NCF paper, the targets are binary and only indicate whether a user has rated a movie or not. This makes the recommendation problem harder than working with the values of the ratings. It is, however, closer to a real-world use case, as interaction data is easier to collect in practice.\nMovieLens only provides positive interactions in form of ratings. I therefore randomly sample negative interactions as suggested by the original paper. They simply represent movies the user hasn’t yet interacted with."
+  },
+  {
+    "objectID": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
+    "href": "blog/neural-collaborative-filtering-in-systemds/index.html#conclusion",
+    "title": "Neural Collaborative Filtering in SystemDS",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe bottom line is that it worked quite well in my experimental setting:\n\nAs in the original paper, it outperformed some traditional matrix factorisation approaches I tried.\nHowever, the point of this project wasn’t really to optimise prediction results by optimising the hyper-parameters, but rather to implement the architecture in SystemDS to test its real-world feasibility as a machine learning system. The implementation can later be used to benchmark the system where it can show off the optimisations it does.\nWhat’s left to say? My pull request has recently been merged. 🎊 And I’ve learnt quite something about how it feels to work with a lower-level system with fewer abstractions than, for example, Keras or PyTorch."
+  },
+  {
+    "objectID": "blog/whose-food/index.html",
+    "href": "blog/whose-food/index.html",
+    "title": "Whose Food?",
+    "section": "",
+    "text": "I used transfer learning to predict what my friends are eating. The code is on GitHub.\nThe long version of the story goes like this: Some of my friends and I have this silly WhatsApp group where we share photos of what we eat – all of what we eat. From breakfast, over lunch until dinner, including all tiny snacks during the day. It’s more of a fun thing, not a serious endeavour, but it made me a bit more conscious about what I eat.\nSince we have been doing this for almost a year now, we have built up a fairly reasonable record of our eating patterns. We also started to develop a sense for the habits of the others. Without looking at who sent the photo, we can now almost immediately identify whose food this probably was.\nSo I started wondering whether this was enough data to predict who was eating what using a machine learning model. Our chat contains 8137 messages, of which 4201 are photos.\nI decided to give it a shot. The task is a simple classification problem: Given a photo, find the friend who posted it. I exported the files from WhatsApp, extracted the labels and some date information using pandas and made some quality checks."
+  },
+  {
+    "objectID": "blog/whose-food/index.html#architecture",
+    "href": "blog/whose-food/index.html#architecture",
+    "title": "Whose Food?",
+    "section": "Architecture",
+    "text": "Architecture\nUnfortunately, I didn’t have enough data to train a model from scratch, so I went ahead and used transfer learning. I fired up PyTorch and grabbed myself a ResNet (from Deep Residual Learning for Image Recognition) that’s pre-trained on ImageNet. Then I attached a linear layer for my classification targets to the final fully connected layer of the ResNet.\nI was then faced with the decision of how to train my model: Should I fine-tune the ResNet’s weights or should I freeze them and only train my linear classifier on top of the ResNet codes? I had a small dataset that is, however, also quite different from ImageNet, and I feared that freezing the ResNet’s weights might underfit my data. Some resources confirmed my expectation. Obviously, it would be much quicker to train, though. So I decided to test both approaches and then compare the results.\nAs an optimisation criterion, I used cross-entropy loss, as I posed my problem as a classification task with multiple target classes. In reality, however, the problem is a multi-label classification task, as every food could have been consumed by multiple people. Having said that, I didn’t have the data to set up my model accordingly and, hence, decided to go forward with cross-entropy.\nBefore starting my training, I did some expectation management:\n\nIf the network just outright guessed whose food it could be, it would get one in five correct, leading to a conservative baseline accuracy of 0.2.\nI did some (admittedly, very unscientific) human testing and tried out how many foods I could correctly classify. I got around 8-9 out of 10 correct. So if my model were to meet human performance, it would reach an accuracy between 0.8 and 0.9."
+  },
+  {
+    "objectID": "blog/whose-food/index.html#results",
+    "href": "blog/whose-food/index.html#results",
+    "title": "Whose Food?",
+    "section": "Results",
+    "text": "Results\nNow I let my poor laptop train a few networks. I always trained for 25 epochs and didn’t make any use of early stopping or other mechanisms that would likely have helped to squeeze a few more per cent out of the network.\nHere are the results I obtained:\n\nEven with ResNet-18, I got very high predictive results – far better than I had expected. It seems that my model easily attains the human goal I had described before. As I had expected, the models with frozen weights that just trained the linear classifier performed much worse than when I was also training the ResNet’s weights.\nFirst, I was a bit surprised to see that in all models, the test accuracy was better than the training accuracy. I’m neither using Dropout nor am I performing any crops or rotations only on the training set that I’m not doing on the test set. I also had done my homework in checking for reasonable loss values at the beginning of the training and overfitting a tiny subset of the data. Finally, I found the source of the behaviour to probably lie in the use of batch normalisation in the ResNet.\nHere is a confusion matrix showing the true predictions next to the false positives and negatives:\n\n\n\nConfusion matrix"
+  },
+  {
+    "objectID": "blog/whose-food/index.html#insights",
+    "href": "blog/whose-food/index.html#insights",
+    "title": "Whose Food?",
+    "section": "Insights",
+    "text": "Insights\nI almost couldn’t believe the good results and suspected overfitting. Even if the metrics on the test set are quite promising, my data set is tiny, and I imagined that my models didn’t truly understand what my friends are eating. Maybe they just focused a lot on what the surroundings looked like.\nFor instance, if you look at the images about which the network is most sure that they are mine, you can see that they mostly contain my plate in the background:\n\n\n\nClassic Patrick food (please don’t judge my diet)\n\n\nTo confirm my hypothesis, I looked at the activations of the ResNet by adding a hook to the forward passing using the very convenient register_forward_hook. I obtained the clearest results by looking at the first layer of the ResNet.\nWas my hypothesis confirmed? See for yourself:\n\n\n\nLeft: input image, Right: activation of the first layer of the ResNet\n\n\nNope. It was the Babybel that gave me away. (Yes, I know, but it’s a guilty pleasure.) I also looked at quite a few of the other images and didn’t find any evidence that the network would focus on picture areas that don’t contain food but surroundings."
+  },
+  {
+    "objectID": "blog/whose-food/index.html#conclusion",
+    "href": "blog/whose-food/index.html#conclusion",
+    "title": "Whose Food?",
+    "section": "Conclusion",
+    "text": "Conclusion\nAs you will surely have realised by now, this project was not too scientific, and my data set was way too small. Here’s actually a list of all the things I could have done to go further in this project:\n\nexplore simpler classifications methods to establish better baselines\ncreate a better top-performance estimation than my somewhat naïve approach\nlook at different metrics and losses\ntry other network architectures and train them longer\nperform more in-depth hyper-parameter searches\nuse more and different data augmentation techniques to enlarge my data set\nlook deeper into the networks’ activations\nbaby-sit the training process more (adjusting optimisers, looking at learning rates, etc.)\netc.\n\nBut, I still solved a real-world “problem” using transfer learning, obtained quite good results and had some fun pictures to show to my friends. Also, I learned a lot. Mainly that when employing advanced methods, you shouldn’t move too fast. I felt like taking baby steps and sanity-checking the intermediate results is a far better approach than back-tracking after you find yourself in a super weird situation."
   }
 ]
