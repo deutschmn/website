@@ -6,6 +6,8 @@ website:
   navbar:
     right:
       - about.qmd
+      - text: CV
+        href: resume.pdf
       - icon: github
         href: https://github.com/deutschmn
       - icon: mastodon
