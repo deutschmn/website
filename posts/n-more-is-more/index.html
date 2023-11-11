@@ -159,8 +159,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>For my <a href="more-is-more.pdf">Master’s thesis</a>, I worked on the NLP task of fact-checking.</strong></p>
-<p>It started out with the observation that current, traditional Transformers (such as BERT) can only handle a limited amount of evidence. That is because they have a quadratic memory complexity in the sequence length. Therefore, processing more evidence becomes quadratically more expensive with every token added.</p>
+<p>For my <a href="more-is-more.pdf">Master’s thesis</a>, I worked on the NLP task of fact-checking. It started out with the observation that current, traditional Transformers (such as BERT) can only handle a limited amount of evidence. That is because they have a quadratic memory complexity in the sequence length. Therefore, processing more evidence becomes quadratically more expensive with every token added.</p>
 <p>The idea of my thesis is to analyse the effect of using more efficient Transformer models with sub-quadratic complexity to increase the amount of evidence they can process. Doing so increased prediction accuracy for long documents and reduced computational costs.</p>
 <p>In this blog post, I will give an overview of my research. If you want to get a complete picture, have a look at my <a href="more-is-more.pdf">full thesis</a>.</p>
 <p>With this thesis, I have obtained my Master’s degree in computer science at Graz University of Technology. I worked on the project while employed at Buster.Ai, a Paris-based startup with a focus on NLP. I would like to thank the whole team once again for their support and the computational resources I was provided with.</p>
@@ -179,11 +178,19 @@ ul.task-list li input[type="checkbox"] {
 <p>Naturally, the more evidence the model should process, the longer the input sequence becomes. However, as Transformers have quadratic complexity in the input length, adding more evidence becomes quadratically more expensive.</p>
 <p><img src="img/transformer-complexity.png" class="img-fluid"></p>
 <p>Therefore, the sequence has to be cut off at some point.</p>
-<p><img src="img/cutoff-2.jpg" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/cutoff-2.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 <section id="roberta-predictions-on-fever" class="level3">
 <h3 class="anchored" data-anchor-id="roberta-predictions-on-fever">RoBERTa predictions on FEVER</h3>
 <p>Cutting off irrelevant evidence is obviously no problem, but cutting off gold evidence is. As you can see in this plot, samples for which the evidence has been cut off are significantly less likely to be correctly classified than samples for which the models have seen the gold evidence.</p>
-<p><img src="img/motivation_correct_vs_gold-seen.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/motivation_correct_vs_gold-seen.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="my-work" class="level2">
