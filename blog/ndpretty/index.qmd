@@ -1,0 +1,43 @@
+---
+title: "ndpretty"
+author: "Patrick Deutschmann"
+date: "2021-01-21"
+categories: [python]
+draft: false
+---
+
+I created a little Python module to display numpy ndarrays in a pretty table in Jupyter notebooks. Find the code on [GitHub](https://github.com/deutschmn/ndpretty) or get it with `pip install ndpretty`.
+
+![](img/full_example.png)
+
+Recently I got into using Jupyter notebooks a lot. After watching Jeremy Howard’s great talk [*I like notebooks*](https://youtu.be/9Q6sLbz37gk), I finally decided to make the jump and replace my beloved PyCharm by Jupyter notebooks as my primary development environment. As I’m not too big of a fan of doing everything in the browser, I went to Visual Studio Code with its [truly excellent notebook support](https://code.visualstudio.com/docs/python/jupyter-support). I know that there is also notebook support in PyCharm, but it just always felt buggy and unpleasant to use.
+
+Everything went well, but there was one big thing that annoyed me and that I missed from PyCharm: Looking at numpy arrays. I’m quite a visual person and enjoy looking at what my matrices and tensors look like. This is why I loved the PyCharm SciView so much:
+
+![PyCharm’s SciView for numpy arrays](img/pycharm.png)
+
+When looking at them in VS code’s notebook environment, they rather looked like this, and I wasn’t a big fan:
+
+![](img/vanilla-np.png)
+
+While it’s quite okay for small arrays, I missed grasping the data by the colour highlighting and simply scrolling through a table. Also, I found I didn’t seem to be the only one with this problem, as [these](https://github.com/microsoft/vscode-jupyter/issues/1286) [issues](https://github.com/microsoft/vscode-python/issues/10559) suggest. I then also explored [some alternatives](https://deutschmn.github.io/ndpretty/alternatives.html) but wasn’t quite happy with the results either.
+
+Therefore I just built my own thing. It’s called `ndpretty`, as it displays ndarrays in a pretty way. 
+
+It makes use of the flexibility offered by Jupyter notebooks. In fact, it just prints a coloured HTML table – there’s not much magic there. In order to make it that bit more convenient, I also used `ipywidgets` to give users the possibility to slice the arrays in a text field right above the table:
+
+![](img/ndarray.png)
+
+That’s quite convenient if you also want to look at arrays with dimension higher than two. Also, for very big arrays, I perform automatic slicing so that your Jupyter notebook doesn’t get sluggish due to huge HTML tables:
+
+![](img/big_array.png)
+
+To make it the default way of displaying numpy arrays, I register them as [IPython third-party formatters](https://ipython.readthedocs.io/en/stable/config/integrating.html?highlight=third%20party#formatters-for-third-party-types).
+
+Overall, I’m quite happy with it, and I plan on using it a lot for my upcoming projects. You can look at the code at [GitHub](https://github.com/deutschmn/ndpretty) and get it with pip install ndpretty. Usage is as easy as importing it and calling `ndpretty.default()`. All subsequently executed cells that return a numpy array (or a PyTorch tensor) will be displayed using ndpretty. More customisation options are explained in the documentation. 
+
+If you want to try it out right now:
+
+<a href="https://colab.research.google.com/github/deutschmn/ndpretty/blob/master/index.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
+</a>
