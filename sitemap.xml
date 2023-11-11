@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/deutschmn/website/about.html</loc>
-    <lastmod>2023-11-11T21:08:41.923Z</lastmod>
+    <lastmod>2023-11-11T21:14:56.486Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/more-is-more/index.html</loc>
-    <lastmod>2023-11-11T21:08:41.071Z</lastmod>
+    <lastmod>2023-11-11T21:14:55.854Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/ndpretty/index.html</loc>
-    <lastmod>2023-11-11T21:08:39.879Z</lastmod>
+    <lastmod>2023-11-11T21:14:54.950Z</lastmod>
   </url>
   <url>
-    <loc>https://github.com/deutschmn/website/blog/author-attribution/index.html</loc>
-    <lastmod>2023-11-11T21:08:39.195Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/deutschmn/website/blog/security-in-container-orchestration/index.html</loc>
-    <lastmod>2023-11-11T21:08:38.383Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/deutschmn/website/index.html</loc>
-    <lastmod>2023-11-11T21:08:37.683Z</lastmod>
+    <loc>https://github.com/deutschmn/website/blog/stock-tweets/index.html</loc>
+    <lastmod>2023-11-11T21:14:54.406Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/dependable-classification/index.html</loc>
-    <lastmod>2023-11-11T21:08:38.783Z</lastmod>
+    <lastmod>2023-11-11T21:14:53.818Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/index.html</loc>
+    <lastmod>2023-11-11T21:14:52.930Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/blog/security-in-container-orchestration/index.html</loc>
+    <lastmod>2023-11-11T21:14:53.502Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/blog/author-attribution/index.html</loc>
+    <lastmod>2023-11-11T21:14:54.138Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/neural-collaborative-filtering-in-systemds/index.html</loc>
-    <lastmod>2023-11-11T21:08:40.275Z</lastmod>
+    <lastmod>2023-11-11T21:14:55.278Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/whose-food/index.html</loc>
-    <lastmod>2023-11-11T21:08:41.603Z</lastmod>
+    <lastmod>2023-11-11T21:14:56.254Z</lastmod>
   </url>
 </urlset>
