@@ -2,7 +2,7 @@
 title: "Whose Food?"
 author: "Patrick Deutschmann"
 date: "2020-12-12"
-categories: [fun,ml]
+categories: [ml]
 draft: false
 ---
 
