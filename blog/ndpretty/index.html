@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Patrick Deutschmann">
-<meta name="dcterms.date" content="2020-12-12">
+<meta name="dcterms.date" content="2021-01-21">
 
-<title>Patrick Deutschmann - Whose Food?</title>
+<title>Patrick Deutschmann - ndpretty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,9 +117,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Whose Food?</h1>
+      <h1 class="title">ndpretty</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">ml</div>
+                <div class="quarto-category">python</div>
               </div>
                   </div>
   </div>
@@ -137,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 12, 2020</p>
+        <p class="date">January 21, 2021</p>
       </div>
     </div>
     
@@ -155,81 +155,30 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>I used transfer learning to predict what my friends are eating. The code is <a href="https://github.com/deutschmn/whose-food">on GitHub</a>.</p>
-<p>The long version of the story goes like this: Some of my friends and I have this silly WhatsApp group where we share photos of what we eat – all of what we eat. From breakfast, over lunch until dinner, including all tiny snacks during the day. It’s more of a fun thing, not a serious endeavour, but it made me a bit more conscious about what I eat.</p>
-<p>Since we have been doing this for almost a year now, we have built up a fairly reasonable record of our eating patterns. We also started to develop a sense for the habits of the others. Without looking at who sent the photo, we can now almost immediately identify whose food this probably was.</p>
-<p>So I started wondering whether this was enough data to predict who was eating what using a machine learning model. Our chat contains 8137 messages, of which 4201 are photos.</p>
-<p>I decided to give it a shot. The task is a simple classification problem: Given a photo, find the friend who posted it. I exported the files from WhatsApp, extracted the labels and some date information using pandas and made some quality checks.</p>
+<p>I created a little Python module to display numpy ndarrays in a pretty table in Jupyter notebooks. Find the code on <a href="https://github.com/deutschmn/ndpretty">GitHub</a> or get it with <code>pip install ndpretty</code>.</p>
+<p><img src="img/full_example.png" class="img-fluid"></p>
+<p>Recently I got into using Jupyter notebooks a lot. After watching Jeremy Howard’s great talk <a href="https://youtu.be/9Q6sLbz37gk"><em>I like notebooks</em></a>, I finally decided to make the jump and replace my beloved PyCharm by Jupyter notebooks as my primary development environment. As I’m not too big of a fan of doing everything in the browser, I went to Visual Studio Code with its <a href="https://code.visualstudio.com/docs/python/jupyter-support">truly excellent notebook support</a>. I know that there is also notebook support in PyCharm, but it just always felt buggy and unpleasant to use.</p>
+<p>Everything went well, but there was one big thing that annoyed me and that I missed from PyCharm: Looking at numpy arrays. I’m quite a visual person and enjoy looking at what my matrices and tensors look like. This is why I loved the PyCharm SciView so much:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="img/example.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Some photos of my small corpus</figcaption>
+<p><img src="img/pycharm.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">PyCharm’s SciView for numpy arrays</figcaption>
 </figure>
 </div>
-<section id="architecture" class="level2">
-<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
-<p>Unfortunately, I didn’t have enough data to train a model from scratch, so I went ahead and used transfer learning. I fired up PyTorch and grabbed myself a ResNet (from <a href="https://arxiv.org/pdf/1512.03385.pdf"><em>Deep Residual Learning for Image Recognition</em></a>) that’s pre-trained on ImageNet. Then I attached a linear layer for my classification targets to the final fully connected layer of the ResNet.</p>
-<p>I was then faced with the decision of how to train my model: Should I fine-tune the ResNet’s weights or should I freeze them and only train my linear classifier on top of the ResNet codes? I had a small dataset that is, however, also quite different from ImageNet, and I feared that freezing the ResNet’s weights might underfit my data. <a href="https://cs231n.github.io/transfer-learning/">Some resources</a> confirmed my expectation. Obviously, it would be much quicker to train, though. So I decided to test both approaches and then compare the results.</p>
-<p>As an optimisation criterion, I used cross-entropy loss, as I posed my problem as a classification task with multiple target classes. In reality, however, the problem is a multi-label classification task, as every food could have been consumed by multiple people. Having said that, I didn’t have the data to set up my model accordingly and, hence, decided to go forward with cross-entropy.</p>
-<p>Before starting my training, I did some expectation management:</p>
-<ul>
-<li>If the network just outright guessed whose food it could be, it would get one in five correct, leading to a conservative baseline accuracy of 0.2.</li>
-<li>I did some (admittedly, very unscientific) human testing and tried out how many foods I could correctly classify. I got around 8-9 out of 10 correct. So if my model were to meet human performance, it would reach an accuracy between 0.8 and 0.9.</li>
-</ul>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>Now I let my poor laptop train a few networks. I always trained for 25 epochs and didn’t make any use of early stopping or other mechanisms that would likely have helped to squeeze a few more per cent out of the network.</p>
-<p>Here are the results I obtained:</p>
-<p><img src="img/results.png" class="img-fluid"></p>
-<p>Even with ResNet-18, I got very high predictive results – far better than I had expected. It seems that my model easily attains the human goal I had described before. As I had expected, the models with frozen weights that just trained the linear classifier performed much worse than when I was also training the ResNet’s weights.</p>
-<p>First, I was a bit surprised to see that in all models, the test accuracy was better than the training accuracy. I’m neither using Dropout nor am I performing any crops or rotations only on the training set that I’m not doing on the test set. I also had done <a href="https://cs231n.github.io/neural-networks-3/#sanitycheck">my homework</a> in checking for reasonable loss values at the beginning of the training and overfitting a tiny subset of the data. Finally, I found the source of the behaviour to probably lie in the use of batch normalisation in the ResNet.</p>
-<p>Here is a confusion matrix showing the true predictions next to the false positives and negatives:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/confusion.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Confusion matrix</figcaption>
-</figure>
-</div>
-</section>
-<section id="insights" class="level2">
-<h2 class="anchored" data-anchor-id="insights">Insights</h2>
-<p>I almost couldn’t believe the good results and suspected overfitting. Even if the metrics on the test set are quite promising, my data set is tiny, and I imagined that my models didn’t truly understand what my friends are eating. Maybe they just focused a lot on what the surroundings looked like.</p>
-<p>For instance, if you look at the images about which the network is most sure that they are mine, you can see that they mostly contain my plate in the background:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/classic_patrick.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Classic Patrick food (please don’t judge my diet)</figcaption>
-</figure>
-</div>
-<p>To confirm my hypothesis, I looked at the activations of the ResNet by adding a hook to the forward passing using the very convenient <a href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html?highlight=register_forward_hook#torch.nn.Module.register_forward_hook"><code>register_forward_hook</code></a>. I obtained the clearest results by looking at the first layer of the ResNet.</p>
-<p>Was my hypothesis confirmed? See for yourself:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/babybel.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Left: input image, Right: activation of the first layer of the ResNet</figcaption>
-</figure>
-</div>
-<p>Nope. It was the Babybel that gave me away. (Yes, I know, but it’s a guilty pleasure.) I also looked at quite a few of the other images and didn’t find any evidence that the network would focus on picture areas that don’t contain food but surroundings.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>As you will surely have realised by now, this project was not too scientific, and my data set was way too small. Here’s actually a list of all the things I could have done to go further in this project:</p>
-<ul>
-<li>explore simpler classifications methods to establish better baselines</li>
-<li>create a better top-performance estimation than my somewhat naïve approach</li>
-<li>look at different metrics and losses</li>
-<li>try other network architectures and train them longer</li>
-<li>perform more in-depth hyper-parameter searches</li>
-<li>use more and different data augmentation techniques to enlarge my data set</li>
-<li>look deeper into the networks’ activations</li>
-<li>baby-sit the training process more (adjusting optimisers, looking at learning rates, etc.)</li>
-<li>etc.</li>
-</ul>
-<p>But, I still solved a real-world “problem” using transfer learning, obtained quite good results and had some fun pictures to show to my friends. Also, I learned a lot. Mainly that when employing advanced methods, you shouldn’t move too fast. I felt like taking baby steps and sanity-checking the intermediate results is a far better approach than back-tracking after you find yourself in a super weird situation.</p>
+<p>When looking at them in VS code’s notebook environment, they rather looked like this, and I wasn’t a big fan:</p>
+<p><img src="img/vanilla-np.png" class="img-fluid"></p>
+<p>While it’s quite okay for small arrays, I missed grasping the data by the colour highlighting and simply scrolling through a table. Also, I found I didn’t seem to be the only one with this problem, as <a href="https://github.com/microsoft/vscode-jupyter/issues/1286">these</a> <a href="https://github.com/microsoft/vscode-python/issues/10559">issues</a> suggest. I then also explored <a href="https://deutschmn.github.io/ndpretty/alternatives.html">some alternatives</a> but wasn’t quite happy with the results either.</p>
+<p>Therefore I just built my own thing. It’s called <code>ndpretty</code>, as it displays ndarrays in a pretty way.</p>
+<p>It makes use of the flexibility offered by Jupyter notebooks. In fact, it just prints a coloured HTML table – there’s not much magic there. In order to make it that bit more convenient, I also used <code>ipywidgets</code> to give users the possibility to slice the arrays in a text field right above the table:</p>
+<p><img src="img/ndarray.png" class="img-fluid"></p>
+<p>That’s quite convenient if you also want to look at arrays with dimension higher than two. Also, for very big arrays, I perform automatic slicing so that your Jupyter notebook doesn’t get sluggish due to huge HTML tables:</p>
+<p><img src="img/big_array.png" class="img-fluid"></p>
+<p>To make it the default way of displaying numpy arrays, I register them as <a href="https://ipython.readthedocs.io/en/stable/config/integrating.html?highlight=third%20party#formatters-for-third-party-types">IPython third-party formatters</a>.</p>
+<p>Overall, I’m quite happy with it, and I plan on using it a lot for my upcoming projects. You can look at the code at <a href="https://github.com/deutschmn/ndpretty">GitHub</a> and get it with pip install ndpretty. Usage is as easy as importing it and calling <code>ndpretty.default()</code>. All subsequently executed cells that return a numpy array (or a PyTorch tensor) will be displayed using ndpretty. More customisation options are explained in the documentation.</p>
+<p>If you want to try it out right now:</p>
+<p><a href="https://colab.research.google.com/github/deutschmn/ndpretty/blob/master/index.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

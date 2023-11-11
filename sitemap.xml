@@ -2,30 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/deutschmn/website/about.html</loc>
-    <lastmod>2023-11-11T18:16:55.917Z</lastmod>
+    <lastmod>2023-11-11T20:52:58.890Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/more-is-more/index.html</loc>
-    <lastmod>2023-11-11T18:16:54.901Z</lastmod>
+    <lastmod>2023-11-11T20:52:58.238Z</lastmod>
   </url>
   <url>
-    <loc>https://github.com/deutschmn/website/blog/security-in-container-orchestration/index.html</loc>
-    <lastmod>2023-11-11T18:16:52.677Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/deutschmn/website/index.html</loc>
-    <lastmod>2023-11-11T18:16:51.849Z</lastmod>
+    <loc>https://github.com/deutschmn/website/blog/ndpretty/index.html</loc>
+    <lastmod>2023-11-11T20:52:57.330Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/author-attribution/index.html</loc>
-    <lastmod>2023-11-11T18:16:53.165Z</lastmod>
+    <lastmod>2023-11-11T20:52:56.782Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/index.html</loc>
+    <lastmod>2023-11-11T20:52:55.866Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/deutschmn/website/blog/security-in-container-orchestration/index.html</loc>
+    <lastmod>2023-11-11T20:52:56.434Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/neural-collaborative-filtering-in-systemds/index.html</loc>
-    <lastmod>2023-11-11T18:16:53.993Z</lastmod>
+    <lastmod>2023-11-11T20:52:57.638Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/deutschmn/website/blog/whose-food/index.html</loc>
-    <lastmod>2023-11-11T18:16:55.557Z</lastmod>
+    <lastmod>2023-11-11T20:52:58.654Z</lastmod>
   </url>
 </urlset>
