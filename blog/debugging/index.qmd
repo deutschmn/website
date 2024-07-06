@@ -27,4 +27,12 @@ No need to despair. Time for ants. Let’s start reducing the size of your hayst
 
 Before, you tried to find *what* breaks your model in the current version of the code. Let’s try finding *when* something changed that broke your model. For this, you need version control, which means git for most people. Prepare a minimal test case to confirm if your model is broken with a current revision. Perhaps, you can already tell after one epoch whether that’s the case. So put that in a little script and dispatch my favourtie last-resort debugging tool of all time: [git-bisect](https://git-scm.com/docs/git-bisect). Git bisect uses binary search to find out which revision introduced an issue. If you know that build 160 was still good but 180 is bad, it’ll first test 170. Turns out that one is still good, so the issue must have been introduced later. So we’re testing 175. Two more iterations of this and we find that the issue was introduced in build 174. Now that’s a haystack of managable size. By looking at the changes in that build, you should be able to figure out what caused this problem.
 
+- Add Perceiver anecdote?
 
+## Conclusion
+- what’s better?
+- depends on the situation and your personal style
+- I usually go for some stoops of hawk debugging, but when an issue becomes thory enough, I go for ant debugging
+- also for emotional reasons: when hawk debugging becomes exhausting and disheartening, ant debugging can give you reassurance that you’ve not gone mad
+- it’s (in principle) guaranteed to be successful
+	- That is, barring horrible things like stochasticity, unexpected side-effects, race conditions and other horrible things. But’s that’s a topic for another blog post.
