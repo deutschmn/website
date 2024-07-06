@@ -1,0 +1,36 @@
+---
+title: "Debugging like Hawks and Ants"
+author: "Patrick Deutschmann"
+date: "2024-07-06"
+categories: [ml,dev,debugging]
+draft: true
+---
+
+# Debugging like Hawks and Ants
+
+Nobody ever explicitly taught me how to debug things. The internet is full of tutorials about programming, just like it’s full of cooking recipes. Still there are things you need to pick up as you go. 
+
+Debugging is to programming what seasoning is to cooking. Essential, yet hard to formalise. The core of debugging is to find the root of an issue in your code, usually a bug. 
+
+(It’s very much like finding a needle a haystack)
+
+Debugging (and seasoning) are very individual tasks. What you do depends on the situation. Still, there’s two patterns I’ve found myself using a lot. I call them *Hawk debugging* and *Ant debugging*.
+
+**Hawk debugging** is for the best case. I use it, when I already have a hunch of where the issue could be. I swoop down on a specific function or class to check my assumptions. Is some parameter not what it’s supposed to be? Has this function not been called? If it works, I feel like a genius. 
+
+(If it doesn’t, well, I don’t. But no need to despair. Another stoop. Still nothing. One more maybe. But where to go? The trouble is, you can only do this for so long. At some point, you run out of hunches. Where do you go if *it really should work like this*?)
+
+But hawk debugging has its limits. It’s fast, if it works, but it’s not guaranteed to.
+
+**Ant debugging** to the rescue. Time to slow down. Let’s carefully and meticulously make progress. We’re not trying to directly find find the problem anymore, but to slowly isolate it. Like ants, we make incremental progress through persistence and thoroughnesss. When hawk-debugging, you’re making educated guesses about which parts of the haystack to look at. For ants, it’s all about chipping away at that haystack. You think the problem is related to component A? Make sure it is. Take away all other components and try reproducing the issue only with B. This won’t tell you the exact source of the problem, but it’s progress. The problem is related to component A? Dive into it. Which classes and functions inside it can you chop off to still see the issue?
+
+
+Let’s look at some examples. Say, you see a crash in your REST API. The consumer sends some payload and your service returns 500. When you see the stacktrace, you immediately go “oh damn, yep, okay”. It’s an edge case you hadn’t accounted for. So you come in like a hawk, attach a debugger to what you expect to be the offending line and fire off the request. Sure enough, you find everthing as you expect it. You draft a quick fix PR and send it off to review. Happy end, the hawk saved the day. You’ve reached hacker level 3000, go ask for a raise.
+
+On the next day, another issue comes around. The machine learning model that’s been retrained and evaluated for ages suddenly gives bad results. (Yes, you’re in machine learning, because you hate determinism and happiness.) No problem, unleash the hawk. If the model is bad, perhaps the training loop is faulty? Stoop, nope. Training loop looks good. Perhaps it’s an issue with input feature X? I remember someone changed something about that lately. Stoop, miss. Perhaps the raw data? Stoop, no. Maybe you’re not a 10x developer (hacker level 3000?) after all. 
+
+Time for ants. You might not not what exactly the issue was, but you have one excellent clue: It used to work before. So something must have changed. That’s all the information the ants need. Let’s start chipping away from that haystack.
+
+- Use your VCS (hopefull you have one, probably it’s git)
+- Prepare a minimal test case
+- Use git-bisect to find the issue
