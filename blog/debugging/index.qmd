@@ -3,7 +3,7 @@ title: "Debugging like Hawks and Tortoises"
 author: "Patrick Deutschmann"
 date: "2024-07-07"
 categories: [dev,debugging,ml,hawks,bugs,tortoises]
-draft: true
+draft: false
 ---
 
 Debugging is a critical skill in programming. And yet, nobody ever explicitly taught me how to do it. The internet is full of tutorials about programming, but there are things you need to pick up as you go. Debugging is one of them. It’s to programming what seasoning is to cooking: essential, yet hard to formalise. After some time, you develop a feeling for it.
