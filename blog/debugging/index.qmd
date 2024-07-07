@@ -6,7 +6,7 @@ categories: [dev,debugging,ml,hawks,bugs,tortoises]
 draft: true
 ---
 
-Nobody ever explicitly taught me how to debug things. The internet is full of tutorials about programming, but there are things you need to pick up as you go. Debugging is one of them. It’s to programming what seasoning is to cooking: essential, yet hard to formalise. After some time, you develop a feeling for it.
+Debugging is a critical skill in programming. And yet, nobody ever explicitly taught me how to do it. The internet is full of tutorials about programming, but there are things you need to pick up as you go. Debugging is one of them. It’s to programming what seasoning is to cooking: essential, yet hard to formalise. After some time, you develop a feeling for it.
 
 Debugging (and seasoning) are very individual tasks. What you do depends on the situation. Still, there are two patterns I’ve found myself using a lot. I call them *hawk debugging* and *tortoise debugging*.
 
