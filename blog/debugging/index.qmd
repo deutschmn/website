@@ -27,7 +27,11 @@ Before, you tried to find *what* breaks your model in the current version of the
 
 **Which is better, then, hawks or tortoises?** There’s no clear winner. As a hawk, you let your intuition guide you to the issue. As a tortoise, you use slow, detailed exploration to circle it. How you use both techniques is a question of personal preference. I usually go for some stoops of hawk debugging first. When an issue turns out to be thorny, I switch to tortoise mode.
 
-The tortoise way also comes with emotional benefits: Hawk debugging can be exhausting. Everything you check that turns out not to be the source of the issue feels like a failure. Running out of ideas feels bad. Tortoise debugging is more reassuring: You keep making progress. No, you haven’t gone mad. It’s just a very obscure problem. In principle, tortoise debugging is guaranteed to be successful. That is, of course, barring horrible things like stochasticity, side effects, and race conditions. But that’s a topic for another blog post.
+There’s also a hybrid approach. Do you remember how we made sure component A was to blame in tortoise debugging? Why did we look at component A? Well, that’s where some hawk-style informed judgement came in.
+
+Another aspect to consider is the emotional impact of each method. Hawk debugging can be exhausting. Everything you check that turns out not to be the source of the issue feels like a failure. Running out of ideas is disheartening. In contrast, tortoise debugging offers emotional reassurance: you keep making progress. No, you haven’t gone mad–it’s just a very obscure problem.
+
+In principle, tortoise debugging is guaranteed to be successful. That is, of course, barring horrible things like stochasticity, side effects, and race conditions. But that’s a topic for another blog post.
 
 <center>🐢🐞🦅</center>
 
