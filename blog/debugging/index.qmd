@@ -29,7 +29,7 @@ Before, you tried to find *what* breaks your model in the current version of the
 
 There’s also a hybrid approach. Do you remember how we made sure component A was to blame in tortoise debugging? Why did we look at component A? Well, that’s where some hawk-style informed judgement came in.
 
-Another aspect to consider is the emotional impact of each method. Hawk debugging can be exhausting. Everything you check that turns out not to be the source of the issue feels like a failure. Running out of ideas is disheartening. In contrast, tortoise debugging offers emotional reassurance: you keep making progress. No, you haven’t gone mad–it’s just a very obscure problem.
+Another aspect to consider is the emotional impact of each method. Maintaining a positive mindset and avoiding frustation is incredibly important. Hawk debugging can be exhausting. Everything you check that turns out not to be the source of the issue feels like a failure. Running out of ideas is disheartening. In contrast, tortoise debugging offers emotional reassurance: you keep making progress. No, you haven’t gone mad–it’s just a very obscure problem.
 
 In principle, tortoise debugging is guaranteed to be successful. That is, of course, barring horrible things like stochasticity, side effects, and race conditions. But that’s a topic for another blog post.
 
