@@ -17,4 +17,4 @@ about:
 
 Hi, I'm Patrick!
 
-I’m a Machine Learning Engineer at [Dedalus](https://www.dedalus.com/global/en/) where I’m building models for clinical risk prediction and NLP for health.
+I’m a machine learning engineer at [Dedalus](https://www.dedalus.com/global/en/) where I’m building AI models for health care.
