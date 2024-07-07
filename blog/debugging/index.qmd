@@ -1,7 +1,7 @@
 ---
 title: "Debugging like Hawks and Tortoises"
 author: "Patrick Deutschmann"
-date: "2024-07-06"
+date: "2024-07-07"
 categories: [ml,dev,debugging]
 draft: true
 ---
@@ -12,9 +12,9 @@ Debugging (and seasoning) are very individual tasks. What you do depends on the 
 
 The core of debugging is not, as the name might suggest, to remove bugs from your code. It’s about finding them. That’s what my patterns are about.
 
-**Hawk debugging** is for the best case. I use it when I already have a hunch about where the issue could be. Like a hawk on its prey, I swoop down on a specific function or class to check my assumptions. Is some parameter not what it’s supposed to be? Has this function not been called? If it works, I feel like a genius. If it doesn’t, you have to try again. At some point, you might run out of hunches. So, hawk debugging has its limits. It’s fast if it works, but it’s not guaranteed to.
+🦅 **Hawk debugging** is for the best case. I use it when I already have a hunch about where the issue could be. Like a hawk on its prey, I swoop down on a specific function or class to check my assumptions. Is some parameter not what it’s supposed to be? Has this function not been called? If it works, I feel like a genius. If it doesn’t, you have to try again. At some point, you might run out of hunches. So, hawk debugging has its limits. It’s fast if it works, but it’s not guaranteed to.
 
-**Tortoise debugging** to the rescue. Time to switch gears. A tortoise makes progress through persistence and thoroughness, and so do we. We’re not trying to find the problem directly anymore. We’re slowly isolating it. When hawk-debugging, you’re making educated guesses about which parts of the haystack to look at. As a tortoise, you’re chipping away at that haystack. Do you think the problem is related to component A? Make sure it is. Take away all other components and try reproducing the issue only with B. This won’t tell you the exact source of the problem, but it’s progress. The problem is related to component A? Dive into it. Which classes and functions inside it can you chop off to still see the issue?
+🐢 **Tortoise debugging** to the rescue. Time to switch gears. A tortoise makes progress through persistence and thoroughness, and so do we. We’re not trying to find the problem directly anymore. We’re slowly isolating it. When hawk-debugging, you’re making educated guesses about which parts of the haystack to look at. As a tortoise, you’re chipping away at that haystack. Do you think the problem is related to component A? Make sure it is. Take away all other components and try reproducing the issue only with B. This won’t tell you the exact source of the problem, but it’s progress. The problem is related to component A? Dive into it. Which classes and functions inside it can you chop off to still see the issue?
 
 
 Say you see a crash in your REST API. The consumer sends some payload, and your service returns 500. When you see the stack trace, you immediately go, “Oh damn, yep, okay”. It’s an edge case you hadn’t accounted for. So you come in like a hawk, attach a debugger to what you expect to be the offending line and fire off the request. Sure enough, you find everything as you expect it. You quickly draft a fix PR and send it off for review. Happy end, the hawk saved the day. You’ve reached hacker level 3000. Go ask your boss for a raise.
@@ -25,14 +25,8 @@ No need to despair. Time for the tortoise. Let’s start reducing the size of yo
 
 Before, you tried to find *what* breaks your model in the current version of the code. Let’s try finding *when* something changed that broke your model. For this, you need version control, which means git for most people. Prepare a minimal test case to confirm if your model is broken with a current revision. Perhaps you can already tell after one epoch whether that’s the case. So put that in a little script and dispatch my favourite last-resort debugging tool of all time: [git-bisect](https://git-scm.com/docs/git-bisect). Git bisect uses binary search to find out which revision introduced an issue. If you know that build 160 was still good, but 180 is bad, it’ll first test 170. Turns out that one is still good, so the issue must have been introduced later. So we’re testing 175. Two more iterations of this and we find that the issue was introduced in build 174. Now that’s a haystack of manageable size. By looking at the changes in that build, you should be able to figure out what caused this problem.
 
-<!— Add Perceiver anecdote? -->
+**Which is better then, hawks or tortoises?** There’s no clear winner. As a hawk, you’re letting yourself guide by your intuition to quickly find the issue. As a tortoise, you use slow, detailed exploration to circle it. How you use both techniques is a question of personal preference. I usually go for some stoops of hawk debugging first. When an issue turns out to be thorny, I switch to tortoise mode.
 
-## Conclusion
-- what’s better?
-	- hawks: intuition
-	- tortoise: slow, detailed exploration
-- depends on the situation and your personal style
-- I usually go for some stoops of hawk debugging, but when an issue becomes thorny enough, I go for tortoise debugging
-- also for emotional reasons: when hawk debugging becomes exhausting and disheartening, tortoise debugging can give you reassurance that you’ve not gone mad
-- it’s (in principle) guaranteed to be successful
-	- That is, barring horrible things like stochasticity, unexpected side-effects, race conditions and other horrible things. But’s that’s a topic for another blog post.
+The Tortoise way also comes with emotional benefits: Hawk-debugging can be exhausting. Everything you check that turns out not be the source of the issue feels like a failure. Running out of ideas feels bad. Tortoise debugging is more reassuring: You keep on making progress. No, you haven’t gone mad, it’s just a very obscure problem. In principle, tortoise debugging guaranteed to be successfull. That is, of course, barring horrible things like stochasticity, side-effects and race conditions. But’s that’s a topic for another blog post.
+
+<center>🐢🐞🦅</center>
