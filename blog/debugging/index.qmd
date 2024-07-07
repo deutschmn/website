@@ -2,7 +2,7 @@
 title: "Debugging like Hawks and Tortoises"
 author: "Patrick Deutschmann"
 date: "2024-07-07"
-categories: [ml,dev,debugging]
+categories: [dev,debugging,ml,hawks,bugs,tortoises]
 draft: true
 ---
 
